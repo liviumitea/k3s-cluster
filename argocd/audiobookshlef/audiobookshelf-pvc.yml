@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: audibookshelf-metadata-pvc
+  namespace: audibookshelf
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: "audibookshelf-metadata-pv"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: audibookshelf-config-pvc
+  namespace: audibookshelf 
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mb
+  volumeName: "audibookshelf-config-pv"
