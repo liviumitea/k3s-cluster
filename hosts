@@ -1,0 +1,18 @@
+k3s-node-1 ansible_host=172.16.23.11 ansible_user=ubuntu ansible_password=mite@intrazneste
+k3s-node-2 ansible_host=172.16.23.12 ansible_user=ubuntu ansible_password=mite@intrazneste
+k3s-node-3 ansible_host=172.16.23.13 ansible_user=ubuntu ansible_password=mite@intrazneste
+k3s-node-4 ansible_host=172.16.23.14 ansible_user=ubuntu ansible_password=mite@intrazneste
+
+[all]
+k3s-node-1
+k3s-node-2
+k3s-node-3
+k3s-node-4
+
+[k3s_master]
+k3s-node-1
+
+[k3s_worker]
+k3s-node-2
+k3s-node-3
+k3s-node-4

@@ -1,0 +1,58 @@
+##################
+# argocd subchart
+##################
+
+argo-cd:
+  configs:
+    params:
+      # Run server without TLS
+      # Traefik finishes TLS connections
+      server.insecure: true
+    cm:
+      statusbadge.enabled: 'true'
+      resource.customizations.health.argoproj.io_Application: |
+        hs = {}
+        hs.status = "Progressing"
+        hs.message = ""
+        if obj.status ~= nil then
+          if obj.status.health ~= nil then
+            hs.status = obj.status.health.status
+            if obj.status.health.message ~= nil then
+              hs.message = obj.status.health.message
+            end
+          end
+        end
+        return hs
+      # Enabling Helm chart rendering with Kustomize
+      kustomize.buildOptions: --enable-helm
+
+  server:
+    # Ingress Resource. LoSnghorn dashboard.
+    ingress:
+      ## Enable creation of ingress resource
+      enabled: true
+      ## Add ingressClassName to the Ingress
+      ingressClassName: nginx
+      # ingress host
+      hosts:
+        - argocd.picluster.ricsanfre.com
+      ## TLS Secret Name
+      tls:
+        - secretName: argocd-tls
+          hosts:
+            - argocd.picluster.ricsanfre.com
+      ## Default ingress path
+      paths:
+        - /
+
+      ## Ingress annotations
+      annotations:
+        # Linkerd configuration. Configure Service as Upstream
+        nginx.ingress.kubernetes.io/service-upstream: "true"
+        # Enable cert-manager to create automatically the SSL certificate and store in Secret
+        # Possible Cluster-Issuer values: 
+        #   * 'letsencrypt-issuer' (valid TLS certificate using IONOS API) 
+        #   * 'ca-issuer' (CA-signed certificate, not valid)
+        cert-manager.io/cluster-issuer: letsencrypt-issuer
+        cert-manager.io/common-name: argocd.picluster.ricsanfre.com
+

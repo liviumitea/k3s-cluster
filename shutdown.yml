@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Shutdown
+      command: shutdown -h 1 min
+      ignore_errors: true

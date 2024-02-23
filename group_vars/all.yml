@@ -1,0 +1,4 @@
+---
+# DNS server
+dns_server: 192.168.23.5
+dns_domain: picluster.megasm.com

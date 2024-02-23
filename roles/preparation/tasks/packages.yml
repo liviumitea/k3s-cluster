@@ -1,0 +1,10 @@
+---
+- name: install utility scripts
+  apt:
+    name: libraspberrypi-bin
+    state: present
+
+- name: install utility scripts
+  apt:
+    name: linux-modules-extra-raspi
+    state: present
